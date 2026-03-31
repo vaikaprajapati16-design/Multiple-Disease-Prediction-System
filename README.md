@@ -32,13 +32,12 @@ Install the required dependencies
 
 ---
 
-## ▶️ Usage
+ ## ▶️ Usage
 
 Run the Streamlit app:
 
-```bash
+
 streamlit run Multiple_Disease_Prediction.py
-```
 
 👉 The app will open in your browser.
 👉 Select a disease from the sidebar and enter input values to get predictions.
