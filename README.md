@@ -21,23 +21,25 @@ This web application allows users to select from multiple disease prediction sys
 
 ## ⚙️ Installation
 
-
-
-To run this project locally, please follow these steps:
-
 Clone the repository
 Navigate to the project directory
 Install the required dependencies
+
+# Navigate to the project folder
+cd Multiple-Disease-Prediction-System
+
+# Install dependencies
+pip install -r requirements.txt
 ```
 
----
 
- ## ▶️ Usage
+## ▶️ Usage
 
 Run the Streamlit app:
 
-
+```bash
 streamlit run Multiple_Disease_Prediction.py
+```
 
 👉 The app will open in your browser.
 👉 Select a disease from the sidebar and enter input values to get predictions.
