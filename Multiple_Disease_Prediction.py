@@ -397,12 +397,25 @@ def handle_csv_upload(disease_key):
     """Handle CSV upload and auto-fill for any disease"""
     config = DISEASE_CONFIGS[disease_key]
     session_key = f"{disease_key}_data"
+    processed_key = f"{disease_key}_last_processed_file"
+
+    # Initialize session state
+    if session_key not in st.session_state:
+        st.session_state[session_key] = {}
+    if processed_key not in st.session_state:
+        st.session_state[processed_key] = None
 
     st.subheader("📄 Upload Medical Report (CSV)")
     uploaded_file = st.file_uploader(f"Choose a CSV file with {config['name']} patient data",
                                    type=['csv'], key=f'{disease_key}_upload')
 
-    if uploaded_file is not None:
+    if uploaded_file is None:
+        if st.session_state.get(processed_key) is not None:
+            st.session_state[session_key] = {}
+            st.session_state[processed_key] = None
+            st.rerun()
+
+    if uploaded_file is not None and st.session_state.get(processed_key) != uploaded_file.name:
         try:
             df_upload = pd.read_csv(uploaded_file)
             st.success(f"✓ CSV loaded successfully! ({len(df_upload)} rows)")
@@ -432,6 +445,7 @@ def handle_csv_upload(disease_key):
                     req_col: float(row_data[req_col.lower().replace('_', ' ')])
                     for req_col in required_cols
                 }
+                st.session_state[processed_key] = uploaded_file.name
                 st.info("✅ Data auto-filled from uploaded CSV. You can modify values if needed.")
                 st.rerun()
             else:
@@ -446,10 +460,6 @@ def handle_csv_upload(disease_key):
         if st.button("🗑️ Clear Auto-filled Data", key=f'clear_{disease_key}'):
             st.session_state[session_key] = {}
             st.rerun()
-
-    # Initialize session state
-    if session_key not in st.session_state:
-        st.session_state[session_key] = {}
 
 def generate_input_fields(disease_key):
     """Generate input fields dynamically for any disease"""

@@ -1,9 +1,8 @@
 streamlit
+streamlit-option-menu
+fpdf
 pandas
 numpy
+plotly
 scikit-learn
 xgboost
-plotly
-fpdf
-streamlit-option-menu
-pickle-mixin
